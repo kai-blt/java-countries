@@ -1,13 +1,21 @@
 package local.kaiblt.countries.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "countries")
 public class Country {
+    //let database determine auto generation of ids
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long countryid;
+
     private String name;
     private long population;
     private long landmasskm2;
     private int medianage;
 
-    public Country(long countryid, String name, long population, long landmasskm2, int medianage) {
+    public Country(String name, long population, long landmasskm2, int medianage) {
         this.countryid = countryid;
         this.name = name;
         this.population = population;
