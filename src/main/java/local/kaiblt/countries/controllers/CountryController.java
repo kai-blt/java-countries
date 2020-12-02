@@ -42,6 +42,7 @@ public class CountryController {
     @GetMapping(value = "/names/all", produces = "application/json")
     public ResponseEntity<?> getAllCountries() {
         refreshList();
+        countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
         return new ResponseEntity<>(countryList, HttpStatus.OK);
     }
 
@@ -70,9 +71,19 @@ public class CountryController {
 
 
     // http://localhost:2019/population/min
-
+    @GetMapping(value = "/population/min", produces = "application/json")
+    public ResponseEntity<?> getMinPopulation() {
+        refreshList();
+        countryList.sort((c1, c2) -> (int) (c1.getPopulation() - c2.getPopulation()));
+        return new ResponseEntity<>(countryList.get(0), HttpStatus.OK);
+    }
 
     // http://localhost:2019/population/max
-
+    @GetMapping(value = "population/max", produces = "application/json")
+    ResponseEntity<?> getMaxPopulation() {
+        refreshList();
+        countryList.sort((c1, c2) -> (int) (c2.getPopulation() - c1.getPopulation()));
+        return new ResponseEntity<>(countryList.get(0), HttpStatus.OK);
+    }
     // Stretch Goal http://localhost:2019/population/median
 }
