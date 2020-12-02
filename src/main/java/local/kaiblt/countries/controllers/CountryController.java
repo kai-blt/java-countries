@@ -85,5 +85,14 @@ public class CountryController {
         countryList.sort((c1, c2) -> (int) (c2.getPopulation() - c1.getPopulation()));
         return new ResponseEntity<>(countryList.get(0), HttpStatus.OK);
     }
+
     // Stretch Goal http://localhost:2019/population/median
+    @GetMapping(value = "/population/median", produces = "application/json")
+    public ResponseEntity<?> getMedianPopulation() {
+        refreshList();
+        countryList.sort((c1, c2) -> (int) (c1.getPopulation() - c2.getPopulation()));
+        int medianIndex = (int) Math.ceil(countryList.size() / 2.00);
+        System.out.println(medianIndex);
+        return new ResponseEntity<>(countryList.get(medianIndex), HttpStatus.OK);
+    }
 }
